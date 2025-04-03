@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package ges_interface;
+
+// Service definition
+service EmailService {
+  // Send an email using the configured app password
+  rpc SendEmail(EmailRequest) returns (EmailResponse);
+  
+  // Shutdown the server
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
+}
+
+// Message to send an email
+message EmailRequest {
+  // List of recipient email addresses
+  repeated string recipients = 1;
+  
+  // Email subject
+  string subject = 3;
+  
+  // Email content/body
+  string the_message = 4;
+}
+
+// Response after attempting to send an email
+message EmailResponse {
+  // Whether the email was sent successfully
+  bool success = 1;
+  
+  // Error message if sending failed
+  string error_message = 2;
+  
+  // Number of recipients the email was sent to
+  int32 recipient_count = 3;
+}
+
+// Message to request server shutdown
+message ShutdownRequest {
+  // Optional reason for shutdown
+  string reason = 1;
+}
+
+// Response to shutdown request
+message ShutdownResponse {
+  // Whether the shutdown request was accepted
+  bool accepted = 1;
+}
